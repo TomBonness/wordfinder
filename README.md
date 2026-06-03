@@ -33,14 +33,18 @@ npm run build
 
 ## Production setup
 
-1. Deploy this repository with AWS Amplify Hosting connected to GitHub.
-2. Keep the Amplify build spec from `amplify.yml` so the backend deploys before the frontend build.
-3. Set production environment variables:
+1. Deploy the Amplify Gen 2 backend for the target branch.
+2. Connect this repository to AWS Amplify Hosting.
+3. Keep the Amplify build spec from `amplify.yml` for frontend CI/CD.
+4. Set production environment variables:
    - `WORD_FINDER_STORE=dynamodb`
    - `WORD_FINDER_NOTE_HASH_SALT=<random secret>`
-   - `AWS_REGION=<deployment region>`
-4. After backend deployment, attach the generated `wordFinderComputeRoleArn` as the Amplify Hosting SSR compute role.
-5. Import a dictionary corpus into the generated dictionary table:
+   - `WORD_FINDER_DICTIONARY_TABLE=<generated dictionary table>`
+   - `WORD_FINDER_DISCOVERED_TABLE=<generated discovered table>`
+   - `WORD_FINDER_NOTES_TABLE=<generated notes table>`
+   - `WORD_FINDER_DAILY_STATS_TABLE=<generated daily stats table>`
+5. Attach the generated `wordFinderComputeRoleArn` as the Amplify Hosting SSR compute role.
+6. Import a dictionary corpus into the generated dictionary table:
 
 ```bash
 WORD_FINDER_DICTIONARY_TABLE=<table-name> npm run import:dictionary -- /path/to/kaikki.jsonl.gz
