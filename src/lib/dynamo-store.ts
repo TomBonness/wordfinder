@@ -58,7 +58,7 @@ function readAmplifyOutputs(): AmplifyOutputs | null {
 }
 
 function client(): DynamoDBDocumentClient {
-  const base = new DynamoDBClient({});
+  const base = new DynamoDBClient({ region: "us-east-1" });
   return DynamoDBDocumentClient.from(base, {
     marshallOptions: { removeUndefinedValues: true },
   });

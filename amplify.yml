@@ -4,6 +4,7 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - env | grep '^WORD_FINDER_' >> .env.production
     build:
       commands:
         - npm run test
