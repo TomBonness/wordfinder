@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+build
+coverage
+.env*.local
+.env
+amplify_outputs.json
+.amplify/
+tsconfig.tsbuildinfo
+.DS_Store
+*.log
+.wordfinder-local.json
