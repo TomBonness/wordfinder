@@ -98,7 +98,7 @@ export function SearchPanel() {
           name="word"
           autoComplete="off"
           autoCapitalize="none"
-          placeholder="mañana"
+          placeholder="fjord"
           value={word}
           onChange={(event) => setWord(event.target.value)}
         />
@@ -109,7 +109,7 @@ export function SearchPanel() {
 
       <div className="home-meta" aria-live="polite">
         <span>{personalStats.discoveries} discoveries from this browser</span>
-        <span>Try “café”, “mañana”, or “fjord”.</span>
+        <span>Try “café”, “fjord”, or “lake”.</span>
       </div>
 
       <ResultState state={state} />

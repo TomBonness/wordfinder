@@ -20,5 +20,6 @@ export const LOCAL_DICTIONARY: readonly LocalDictionaryEntry[] = [
   { word: "co-operate", display: "co-operate", language: "English", source: "local seed corpus" },
   { word: "l'amour", display: "l'amour", language: "French", source: "local seed corpus" },
   { word: "fjord", display: "fjord", language: "Norwegian", source: "local seed corpus" },
+  { word: "lake", display: "lake", language: "English", source: "local seed corpus" },
   { word: "roma", display: "Roma", language: "Italian", source: "local seed corpus" }
 ];
