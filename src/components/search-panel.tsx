@@ -85,11 +85,10 @@ export function SearchPanel() {
 
   return (
     <section className="search-panel" aria-labelledby="search-heading">
-      <div className="kicker">open corpus / anonymous discovery</div>
-      <h1 id="search-heading">Find whether a word has entered the archive.</h1>
+      <div className="kicker">word finder</div>
+      <h1 id="search-heading">Find a word.</h1>
       <p className="lede">
-        Search a Roman-alphabet word from the imported Wiktionary-derived corpus. New discoveries become part of the public record;
-        rediscoveries strengthen its signal.
+        Search the public Roman-alphabet corpus. Discoveries, rediscoveries, and notes are saved anonymously.
       </p>
 
       <form className="search-form" onSubmit={onSubmit}>
@@ -108,9 +107,9 @@ export function SearchPanel() {
         </button>
       </form>
 
-      <div className="personal-card" aria-live="polite">
-        <span className="metric-value">{personalStats.discoveries}</span>
-        <span className="metric-label">new discoveries from this browser</span>
+      <div className="home-meta" aria-live="polite">
+        <span>{personalStats.discoveries} discoveries from this browser</span>
+        <span>Try “café”, “mañana”, or “fjord”.</span>
       </div>
 
       <ResultState state={state} />
@@ -120,7 +119,7 @@ export function SearchPanel() {
 
 function ResultState({ state }: { state: ApiState }) {
   if (state.status === "idle") {
-    return <div className="result-card muted">Try a word from any Latin-script language in the corpus.</div>;
+    return null;
   }
 
   if (state.status === "loading") {
