@@ -7,8 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src scripts next.config.ts vitest.config.ts --max-warnings=0",
-    "typecheck": "tsc --noEmit",
+    "lint": "eslint eslint.config.mjs --max-warnings=0",
+    "typecheck": "tsc --project tsconfig.typecheck.json --noEmit --incremental false",
     "test": "vitest run",
     "import:dictionary": "tsx scripts/import-dictionary.ts"
   },

@@ -1,17 +1,33 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
+import globals from "globals";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({ baseDirectory: __dirname });
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  {
-    ignores: [".next/**", ".amplify/**", "node_modules/**", "amplify_outputs.json", "next-env.d.ts"],
-  },
+const ignores = [
+  ".next/**",
+  ".amplify/**",
+  "node_modules/**",
+  "coverage/**",
+  "amplify_outputs.json",
+  "next-env.d.ts",
+  "tsconfig.tsbuildinfo",
+  "*.jsonl",
+  "*.jsonl.gz",
+  "*.db",
+  "*.sqlite",
+  "*.sqlite3",
+  "*.duckdb",
+  "corpus/**",
+  "data-imports/**",
 ];
 
-export default eslintConfig;
+export default [
+  { ignores },
+  {
+    ...js.configs.recommended,
+    files: ["**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: globals.node,
+    },
+  },
+];

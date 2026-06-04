@@ -32,6 +32,7 @@ body {
     var(--bg);
   font-family: var(--font-sans);
   text-rendering: geometricPrecision;
+  letter-spacing: 0.005em;
 }
 
 a {
@@ -136,7 +137,7 @@ main {
   margin: 0;
   font-size: clamp(3.2rem, 10vw, 8.6rem);
   line-height: 0.87;
-  letter-spacing: -0.095em;
+  letter-spacing: -0.085em;
 }
 
 .search-panel h1 {
@@ -200,7 +201,7 @@ main {
   background: transparent;
   color: var(--ink);
   font-size: clamp(1.6rem, 5vw, 3rem);
-  letter-spacing: -0.065em;
+  letter-spacing: -0.055em;
 }
 
 .search-form input::placeholder {
@@ -251,6 +252,7 @@ button:disabled {
 .result-card,
 .side-panel,
 .chart-card,
+.zipf-card,
 .top-list,
 .word-record,
 .notes-section,
@@ -284,7 +286,7 @@ button:disabled {
   font-size: clamp(2rem, 4vw, 3.6rem);
   font-weight: 800;
   line-height: 0.92;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.07em;
 }
 
 .metric-label,
@@ -310,7 +312,7 @@ figcaption,
   margin: 0.25rem 0 1.5rem;
   font-size: clamp(2.4rem, 7vw, 5.2rem);
   line-height: 0.92;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.07em;
 }
 
 .result-card.error {
@@ -372,7 +374,8 @@ figcaption,
 .word-record,
 .notes-section,
 .top-list,
-.chart-card {
+.chart-card,
+.zipf-card {
   padding: clamp(1.25rem, 3vw, 2rem);
 }
 
@@ -411,10 +414,11 @@ figcaption,
 
 .info-grid h2,
 .top-list h2,
-.notes-section h2 {
+.notes-section h2,
+.zipf-card h2 {
   margin: 0 0 0.75rem;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
-  letter-spacing: -0.06em;
+  letter-spacing: -0.052em;
 }
 
 .stats-page {
@@ -430,7 +434,8 @@ figcaption,
   color: var(--accent-dark);
 }
 
-.chart-card svg {
+.chart-card svg,
+.zipf-card svg {
   display: block;
   width: 100%;
   height: auto;
@@ -447,6 +452,31 @@ figcaption,
   stroke-width: 4;
   stroke-linejoin: round;
   stroke-linecap: round;
+}
+
+.zipf-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.zipf-point {
+  fill: var(--surface);
+  stroke: var(--accent-dark);
+  stroke-width: 3;
+}
+
+.zipf-card figcaption {
+  max-width: 42rem;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.005em;
+  line-height: 1.45;
+  text-transform: none;
 }
 
 .chart-point {
@@ -495,7 +525,7 @@ figcaption,
 .top-list a {
   font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.045em;
 }
 
 .word-page {

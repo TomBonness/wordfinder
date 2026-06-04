@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { StatsChart } from "@/components/stats-chart";
+import { ZipfChart } from "@/components/zipf-chart";
 import { getDailyStats, getStatsSummary } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +27,7 @@ export default async function StatsPage() {
       </section>
 
       <StatsChart data={daily} />
+      <ZipfChart data={summary.topRediscovered} />
 
       <section className="top-list" aria-labelledby="top-heading">
         <div className="section-heading-row">

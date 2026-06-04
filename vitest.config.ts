@@ -4,7 +4,9 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
-    pool: "forks",
+    pool: "threads",
+    fileParallelism: false,
+    maxWorkers: 1,
   },
   resolve: {
     alias: {

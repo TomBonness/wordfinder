@@ -7,7 +7,7 @@ A minimalist word-discovery archive for Roman-alphabet words from an imported di
 - Search and discover words from a finite dictionary corpus
 - Rediscovery/search counts for previously discovered words
 - Anonymous public notes per word with validation and rate limiting
-- Public stats page with top rediscovered words and daily discovery chart
+- Public stats page with top rediscovered words, a rank/count curve, and daily discovery chart
 - Word detail pages with discovery metadata and notes
 - Next.js App Router API routes for the backend
 - Amplify Gen 2 DynamoDB resources for production storage
@@ -30,6 +30,10 @@ npm run typecheck
 npm run lint
 npm run build
 ```
+
+`typecheck` uses `tsconfig.typecheck.json` as the TypeScript gate for `src/`, `scripts/`, and root config files. It intentionally excludes generated `.next/**` output and disables incremental state so stale build caches cannot make validation scan generated route artifacts; `next build` may still add `.next/types/**/*.ts` to `tsconfig.json` for its own build-time route checks. `lint` is intentionally bounded to JavaScript config linting; do not reintroduce `eslint-config-next`/`FlatCompat` or broad `eslint src ...` scans unless the large generated/cache artifact issue is solved another way.
+
+Large corpus files are import inputs, not application assets. Keep Kaikki/Wiktextract downloads outside `src/`, do not import them from TypeScript, and run the importer with a filesystem path as shown below. Verification commands should only use the in-memory seed corpus unless `WORD_FINDER_STORE=dynamodb` is explicitly set. Corpus/database artifacts are ignored by `.gitignore`.
 
 ## Production setup
 

@@ -11,3 +11,11 @@ tsconfig.tsbuildinfo
 .DS_Store
 *.log
 .wordfinder-local.json
+*.jsonl
+*.jsonl.gz
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+corpus/
+data-imports/
