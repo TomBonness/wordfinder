@@ -119,9 +119,14 @@ main {
   padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
 }
 
+.home-page {
+  display: grid;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
 .home-grid {
   display: grid;
-  min-height: calc(100vh - 8.5rem);
+  min-height: min(64vh, 38rem);
   place-items: center;
 }
 
@@ -394,6 +399,14 @@ figcaption,
   margin-bottom: 2rem;
 }
 
+.home-info h2 {
+  max-width: 14ch;
+  margin: 0 0 2rem;
+  font-size: clamp(2.6rem, 7vw, 5.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.075em;
+}
+
 .info-grid,
 .stats-grid {
   display: grid;
@@ -413,6 +426,7 @@ figcaption,
 }
 
 .info-grid h2,
+.info-grid h3,
 .top-list h2,
 .notes-section h2,
 .zipf-card h2 {
