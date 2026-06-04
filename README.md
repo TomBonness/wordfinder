@@ -1,57 +1,34 @@
 # Word Finder
 
-A minimalist word-discovery archive for Roman-alphabet words from an imported dictionary corpus.
+Word Finder is a public experiment in word rediscovery.
 
-## Features
+People search for words from a finite dictionary corpus. When a word is found for the first time, it becomes part of the public archive. When someone searches for a word that has already been found, its rediscovery count rises.
 
-- Search and discover words from a finite dictionary corpus
-- Rediscovery/search counts for previously discovered words
-- Anonymous public notes per word with validation and rate limiting
-- Public stats page with top rediscovered words, a rank/count curve, and daily discovery chart
-- Word detail pages with discovery metadata and notes
-- Next.js App Router API routes for the backend
-- Amplify Gen 2 DynamoDB resources for production storage
-- Kaikki/Wiktextract JSONL import script for dictionary seeding
+Over time, those ranked rediscovery counts may begin to resemble a Zipf-like curve: a small number of words repeatedly searched at the top, followed by a long tail of words that are found rarely. The curve is not generated or forced. It is an observational trace of what visitors actually search.
 
-## Local development
+## How it works
 
-```bash
-npm install
-npm run dev
-```
+1. A visitor enters a word.
+2. The site normalizes the input.
+3. The normalized word is checked against the imported dictionary corpus.
+4. If the word is in the corpus, the archive records either:
+   - a first discovery, or
+   - a rediscovery/search count increment.
+5. Public stats rank the most rediscovered words and plot them by rank and count.
 
-Local development uses the built-in in-memory seed corpus unless `WORD_FINDER_STORE=dynamodb` is set.
+The Stats page includes two views of the archive:
 
-## Verification
+- daily first discoveries, showing how the corpus is being uncovered over time
+- top searched words by rank, showing the emerging Zipf-style shape
 
-```bash
-npm run test
-npm run typecheck
-npm run lint
-npm run build
-```
+## Corpus boundary
 
-`typecheck` uses `tsconfig.typecheck.json` as the TypeScript gate for `src/`, `scripts/`, and root config files. It intentionally excludes generated `.next/**` output and disables incremental state so stale build caches cannot make validation scan generated route artifacts; `next build` may still add `.next/types/**/*.ts` to `tsconfig.json` for its own build-time route checks. `lint` is intentionally bounded to JavaScript config linting; do not reintroduce `eslint-config-next`/`FlatCompat` or broad `eslint src ...` scans unless the large generated/cache artifact issue is solved another way.
+Word Finder is not a claim about every word in every language. It only knows about the imported corpus.
 
-Large corpus files are import inputs, not application assets. Keep Kaikki/Wiktextract downloads outside `src/`, do not import them from TypeScript, and run the importer with a filesystem path as shown below. Verification commands should only use the in-memory seed corpus unless `WORD_FINDER_STORE=dynamodb` is explicitly set. Corpus/database artifacts are ignored by `.gitignore`.
+The current corpus target is Kaikki.org/Wiktextract data derived from Wiktionary. During import, entries are normalized and filtered to Roman/Latin-script dictionary keys. Searches outside that boundary are rejected even if they are real words elsewhere.
 
-## Production setup
+No extra language corpora are loaded by the app at runtime. The corpus is an input to the archive, not something bundled into the public interface.
 
-1. Deploy the Amplify Gen 2 backend for the target branch.
-2. Connect this repository to AWS Amplify Hosting.
-3. Keep the Amplify build spec from `amplify.yml` for frontend CI/CD.
-4. Set production environment variables:
-   - `WORD_FINDER_STORE=dynamodb`
-   - `WORD_FINDER_NOTE_HASH_SALT=<random secret>`
-   - `WORD_FINDER_DICTIONARY_TABLE=<generated dictionary table>`
-   - `WORD_FINDER_DISCOVERED_TABLE=<generated discovered table>`
-   - `WORD_FINDER_NOTES_TABLE=<generated notes table>`
-   - `WORD_FINDER_DAILY_STATS_TABLE=<generated daily stats table>`
-5. Attach the generated `wordFinderComputeRoleArn` as the Amplify Hosting SSR compute role.
-6. Import a dictionary corpus into the generated dictionary table:
+## Notes
 
-```bash
-WORD_FINDER_DICTIONARY_TABLE=<table-name> npm run import:dictionary -- /path/to/kaikki.jsonl.gz
-```
-
-The importer expects Kaikki/Wiktextract JSONL or JSONL.GZ entries and stores only normalized Latin-script words.
+Visitors can leave short anonymous public notes on word pages. Notes are intended for usage context, etymological curiosity, memories, and small observations. They are plain text, length-limited, and rate-limited per word.
