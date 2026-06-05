@@ -24,10 +24,16 @@ export default async function HomePage() {
         <SearchPanel />
         <div className="story-hero-copy">
           <div className="kicker">public Zipf experiment</div>
-          <p className="story-deck">
-            Search any word that comes to mind. Each rediscovery adds one public count, and the ranked counts can reveal whether
-            collective curiosity bends into a Zipf-like curve.
-          </p>
+          <dl className="hero-facts" aria-label="Experiment rules">
+            <div>
+              <dt>valid search</dt>
+              <dd>+1 public count</dd>
+            </div>
+            <div>
+              <dt>rediscovery</dt>
+              <dd>moves the rank curve</dd>
+            </div>
+          </dl>
         </div>
       </section>
 
