@@ -6,13 +6,22 @@ import type { DiscoveryRecord } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
+const PASSIVE_HIDDEN_WORDS = new Set(["manana", "mañana"]);
+
+function isPassiveVisibleWord(item: DiscoveryRecord): boolean {
+  return !PASSIVE_HIDDEN_WORDS.has(item.word);
+}
+
 export default async function HomePage() {
   const [summary, daily] = await Promise.all([getStatsSummary(), getDailyStats(30)]);
-  const topWords = summary.topRediscovered.slice(0, 8);
+  const rankedWords = summary.topRediscovered.filter(isPassiveVisibleWord);
+  const rediscoverySearches = rankedWords.reduce((sum, item) => sum + item.searchCount, 0);
+  const topWords = rankedWords.slice(0, 8);
 
   return (
     <div className="page-shell story-page">
       <section className="story-hero" aria-label="Zipf word-search experiment">
+        <SearchPanel />
         <div className="story-hero-copy">
           <div className="kicker">public Zipf experiment</div>
           <p className="story-deck">
@@ -20,7 +29,6 @@ export default async function HomePage() {
             collective curiosity bends into a Zipf-like curve.
           </p>
         </div>
-        <SearchPanel />
       </section>
 
       <section className="story-section story-copy" aria-labelledby="experiment-heading">
@@ -48,11 +56,11 @@ export default async function HomePage() {
             The left edge tracks the most rediscovered words. The long right side is where one-off searches wait to be found again.
           </p>
         </div>
-        <ZipfChart data={summary.topRediscovered} />
+        <ZipfChart data={rankedWords} />
         <div className="story-metrics" aria-label="Current experiment metrics">
           <Metric label="discovered words" value={summary.totalDiscovered.toLocaleString()} />
-          <Metric label="word of the day" value={summary.wordOfTheDay?.display ?? "—"} />
-          <Metric label="ranked words shown" value={summary.topRediscovered.length.toLocaleString()} />
+          <Metric label="rediscovery searches" value={rediscoverySearches.toLocaleString()} />
+          <Metric label="ranked words shown" value={rankedWords.length.toLocaleString()} />
         </div>
         <TopWords words={topWords} />
       </section>

@@ -465,6 +465,21 @@ figcaption,
   border-top: 2px solid var(--line);
 }
 
+.curve-section > .zipf-card,
+.curve-section > .story-metrics,
+.curve-section > .top-list,
+.activity-section > .chart-card {
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.chart-card,
+.zipf-card {
+  margin-block: 0;
+}
+
 .curve-intro {
   display: flex;
   align-items: flex-end;
