@@ -17,8 +17,8 @@ export function ZipfChart({ data }: { data: DiscoveryRecord[] }) {
     <figure className="zipf-card" aria-labelledby="zipf-heading">
       <div className="section-heading-row">
         <div>
-          <div className="kicker">rank curve</div>
-          <h2 id="zipf-heading">Top searched words by rank</h2>
+          <div className="kicker">Zipf trace</div>
+          <h2 id="zipf-heading">Rediscovery counts by rank</h2>
         </div>
       </div>
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Top searched words plotted by rank and search count">
@@ -36,8 +36,8 @@ export function ZipfChart({ data }: { data: DiscoveryRecord[] }) {
         })}
       </svg>
       <figcaption>
-        If public rediscovery behaves like a Zipf curve, the left side should climb sharply while lower-ranked words trail into a
-        long, quiet tail.
+        Each point is a word. A sharper left edge and a quieter right tail are the shape this public search experiment is watching
+        for.
       </figcaption>
     </figure>
   );

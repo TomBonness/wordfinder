@@ -1,13 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-import type { DiscoveryResult } from "@/lib/types";
+import { WordNotes } from "@/components/word-notes";
+import type { DiscoveryResult, PublicNote } from "@/lib/types";
 
 type ApiState =
   | { status: "idle" }
   | { status: "loading" }
   | { status: "success"; result: DiscoveryResult }
+  | { status: "error"; error: string };
+
+type NotesLoadState =
+  | { status: "loading" }
+  | { status: "success"; notes: PublicNote[] }
   | { status: "error"; error: string };
 
 type PersonalStats = {
@@ -85,10 +90,10 @@ export function SearchPanel() {
 
   return (
     <section className="search-panel" aria-labelledby="search-heading">
-      <div className="kicker">word finder</div>
-      <h1 id="search-heading">Find a word.</h1>
+      <div className="kicker">search the curve</div>
+      <h1 id="search-heading">Add a word to the count.</h1>
       <p className="lede">
-        Search the public Roman-alphabet corpus. Discoveries, rediscoveries, and notes are saved anonymously.
+        Try a word, see whether it is new or rediscovered, and add one anonymous signal to the shared ranking.
       </p>
 
       <form className="search-form" onSubmit={onSubmit}>
@@ -131,7 +136,6 @@ function ResultState({ state }: { state: ApiState }) {
   }
 
   const { result } = state;
-  const detailHref = `/word/${encodeURIComponent(result.discovery.word)}`;
 
   return (
     <article className="result-card success">
@@ -139,24 +143,74 @@ function ResultState({ state }: { state: ApiState }) {
       <h2>{result.entry.display}</h2>
       <dl className="result-grid">
         <div>
+          <dt>language</dt>
+          <dd>{result.entry.language ?? "corpus entry"}</dd>
+        </div>
+        <div>
+          <dt>source</dt>
+          <dd>{result.entry.source ?? "imported corpus"}</dd>
+        </div>
+        <div>
+          <dt>status</dt>
+          <dd>{result.isNew ? "new public record" : "already discovered"}</dd>
+        </div>
+        <div>
           <dt>search count</dt>
           <dd>{result.discovery.searchCount.toLocaleString()}</dd>
         </div>
         <div>
-          <dt>discovered</dt>
+          <dt>first discovered</dt>
           <dd>{new Date(result.discovery.discoveredAt).toLocaleString()}</dd>
         </div>
         <div>
-          <dt>language</dt>
-          <dd>{result.entry.language ?? "corpus entry"}</dd>
+          <dt>last searched</dt>
+          <dd>{new Date(result.discovery.lastSearchedAt).toLocaleString()}</dd>
         </div>
       </dl>
       {result.notePreview ? (
         <blockquote className="note-preview">“{result.notePreview.body}”</blockquote>
       ) : (
-        <p className="muted-copy">No notes yet. Leave the first anonymous note on the word page.</p>
+        <p className="muted-copy">No notes yet. Publish the first anonymous note below.</p>
       )}
-      <Link className="text-link" href={detailHref}>open word record</Link>
+      <InlineWordNotes word={result.discovery.word} />
     </article>
   );
+}
+
+function InlineWordNotes({ word }: { word: string }) {
+  const [notesState, setNotesState] = useState<NotesLoadState>({ status: "loading" });
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setNotesState({ status: "loading" });
+
+    async function loadNotes() {
+      try {
+        const response = await fetch(`/api/words/${encodeURIComponent(word)}/notes?limit=50`, { signal: controller.signal });
+        const payload = (await response.json()) as { notes?: PublicNote[]; error?: string };
+        if (!response.ok || !Array.isArray(payload.notes)) {
+          setNotesState({ status: "error", error: payload.error ?? "Could not load notes." });
+          return;
+        }
+        setNotesState({ status: "success", notes: payload.notes });
+      } catch {
+        if (!controller.signal.aborted) {
+          setNotesState({ status: "error", error: "The note service is unavailable." });
+        }
+      }
+    }
+
+    void loadNotes();
+    return () => controller.abort();
+  }, [word]);
+
+  if (notesState.status === "loading") {
+    return <p className="inline-notes-status muted-copy">Loading notes…</p>;
+  }
+
+  if (notesState.status === "error") {
+    return <p className="inline-notes-status error">{notesState.error}</p>;
+  }
+
+  return <WordNotes key={word} word={word} initialNotes={notesState.notes} />;
 }

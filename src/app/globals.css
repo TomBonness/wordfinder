@@ -119,25 +119,29 @@ main {
   padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
 }
 
-.home-page {
+.story-page {
   display: grid;
-  gap: clamp(2rem, 6vw, 5rem);
+  gap: clamp(2.5rem, 7vw, 6rem);
 }
 
-.home-grid {
+.story-hero {
   display: grid;
-  min-height: min(64vh, 38rem);
-  place-items: center;
+  grid-template-columns: minmax(0, 0.72fr) minmax(22rem, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  min-height: min(72vh, 44rem);
+}
+
+.story-hero-copy {
+  max-width: 24rem;
 }
 
 .search-panel {
-  width: min(100%, 760px);
+  width: min(100%, 820px);
 }
 
 .search-panel h1,
-.text-page h1,
-.stats-hero h1,
-.word-record h1 {
+.text-page h1 {
   max-width: 13ch;
   margin: 0;
   font-size: clamp(3.2rem, 10vw, 8.6rem);
@@ -146,14 +150,10 @@ main {
 }
 
 .search-panel h1 {
-  max-width: 8ch;
-  font-size: clamp(4.2rem, 14vw, 9rem);
+  max-width: 10ch;
+  font-size: clamp(4rem, 12vw, 8.6rem);
 }
 
-.word-record h1 {
-  max-width: 100%;
-  overflow-wrap: anywhere;
-}
 
 .kicker {
   margin-bottom: 1rem;
@@ -166,9 +166,12 @@ main {
 }
 
 .lede,
+.story-deck,
+.story-copy p,
+.curve-intro p,
+.boundary-section p,
 .text-page p,
-.side-panel p,
-.stats-hero p {
+.side-panel p {
   max-width: 46rem;
   color: var(--muted);
   font-size: clamp(1.05rem, 1.8vw, 1.25rem);
@@ -259,7 +262,6 @@ button:disabled {
 .chart-card,
 .zipf-card,
 .top-list,
-.word-record,
 .notes-section,
 .text-page {
   background: rgb(255 253 248 / 86%);
@@ -362,25 +364,29 @@ figcaption,
   line-height: 1.45;
 }
 
-.text-link {
-  display: inline-flex;
-  width: fit-content;
-  margin-top: 1rem;
-  border-bottom: 2px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.result-card .notes-section {
+  width: 100%;
+  margin-top: 1.5rem;
+  background: rgb(255 253 248 / 68%);
+  box-shadow: none;
+}
+
+.inline-notes-status {
+  margin-top: 1.5rem;
+}
+
+.inline-notes-status.error {
+  color: var(--error);
 }
 
 .side-panel,
 .text-page,
-.word-record,
 .notes-section,
 .top-list,
 .chart-card,
-.zipf-card {
+.zipf-card,
+.story-section,
+.curve-section {
   padding: clamp(1.25rem, 3vw, 2rem);
 }
 
@@ -399,16 +405,23 @@ figcaption,
   margin-bottom: 2rem;
 }
 
-.home-info h2 {
-  max-width: 14ch;
-  margin: 0 0 2rem;
-  font-size: clamp(2.6rem, 7vw, 5.8rem);
+.story-section {
+  display: grid;
+  gap: 1.5rem;
+  border-top: 2px solid var(--line);
+}
+
+.story-section h2,
+.curve-intro h2 {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 5.6rem);
   line-height: 0.92;
   letter-spacing: -0.075em;
 }
 
 .info-grid,
-.stats-grid {
+.story-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
@@ -417,6 +430,11 @@ figcaption,
 
 .info-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.story-metrics,
+.boundary-section .info-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .info-grid > div,
@@ -435,18 +453,30 @@ figcaption,
   letter-spacing: -0.052em;
 }
 
-.stats-page {
+.story-columns {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 4vw, 3rem);
 }
 
-.stats-hero h1 {
-  max-width: 9ch;
+.curve-section {
+  display: grid;
+  gap: 1.25rem;
+  border-top: 2px solid var(--line);
 }
 
-.metric-card a:hover .metric-value {
-  color: var(--accent-dark);
+.curve-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
 }
+
+.curve-intro p {
+  max-width: 28rem;
+  margin: 0;
+}
+
 
 .chart-card svg,
 .zipf-card svg {
@@ -536,16 +566,12 @@ figcaption,
   border-top: 1px solid var(--line-soft);
 }
 
-.top-list a {
+.top-word-display {
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.045em;
 }
 
-.word-page {
-  display: grid;
-  gap: 1.5rem;
-}
 
 .note-form {
   display: grid;
@@ -603,9 +629,12 @@ figcaption,
 
 @media (max-width: 820px) {
   .site-header,
+  .story-hero,
+  .story-columns,
+  .story-metrics,
   .result-grid,
-  .stats-grid,
-  .info-grid {
+  .info-grid,
+  .boundary-section .info-grid {
     grid-template-columns: 1fr;
   }
 
@@ -615,7 +644,12 @@ figcaption,
   }
 
   .search-panel h1 {
-    font-size: clamp(3.6rem, 18vw, 6.4rem);
+    font-size: clamp(3.4rem, 16vw, 6.2rem);
+  }
+
+  .curve-intro {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .search-form button {

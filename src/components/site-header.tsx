@@ -2,7 +2,8 @@ import Link from "next/link";
 
 const navItems = [
   { href: "/", label: "search" },
-  { href: "/stats", label: "stats" },
+  { href: "/#curve-heading", label: "curve" },
+  { href: "/#activity-heading", label: "activity" },
 ];
 
 export function SiteHeader() {

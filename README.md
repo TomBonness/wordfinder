@@ -14,12 +14,9 @@ Over time, those ranked rediscovery counts may begin to resemble a Zipf-like cur
 4. If the word is in the corpus, the archive records either:
    - a first discovery, or
    - a rediscovery/search count increment.
-5. Public stats rank the most rediscovered words and plot them by rank and count.
+5. The home page ranks the most rediscovered words and plots them by rank and count.
 
-The Stats page includes two views of the archive:
-
-- daily first discoveries, showing how the corpus is being uncovered over time
-- top searched words by rank, showing the emerging Zipf-style shape
+The main page combines search, the experiment explanation, live stats, the Zipf-style rank curve, daily first discoveries, inline word records, and public notes.
 
 ## Corpus boundary
 
@@ -31,4 +28,4 @@ No extra language corpora are loaded by the app at runtime. The corpus is an inp
 
 ## Notes
 
-Visitors can leave short anonymous public notes on word pages. Notes are intended for usage context, etymological curiosity, memories, and small observations. They are plain text, length-limited, and rate-limited per word.
+Visitors can leave short anonymous public notes from the inline word record after a successful search. Notes are intended for usage context, etymological curiosity, memories, and small observations. They are plain text, length-limited, and rate-limited per word.
