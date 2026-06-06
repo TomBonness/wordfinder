@@ -520,6 +520,14 @@ figcaption,
   stroke-width: 3;
 }
 
+.zipf-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  fill: var(--muted);
+  pointer-events: none;
+}
+
 .zipf-card figcaption {
   max-width: 42rem;
   margin-top: 1rem;

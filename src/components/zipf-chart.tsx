@@ -27,11 +27,15 @@ export function ZipfChart({ data }: { data: DiscoveryRecord[] }) {
         <path d={path} className="zipf-line" />
         {points.map((point) => {
           const searchLabel = point.searchCount === 1 ? "search" : "searches";
-
           return (
-            <circle key={point.word} cx={point.x} cy={point.y} r="5" className="zipf-point">
-              <title>{`${point.display}: rank ${point.rank}, ${point.searchCount.toLocaleString()} ${searchLabel}`}</title>
-            </circle>
+            <g key={point.word}>
+              <circle cx={point.x} cy={point.y} r="5" className="zipf-point">
+                <title>{`${point.display}: rank ${point.rank}, ${point.searchCount.toLocaleString()} ${searchLabel}`}</title>
+              </circle>
+              <text x={point.x} y={point.y - 12} className="zipf-label" textAnchor="middle">
+                {point.display}
+              </text>
+            </g>
           );
         })}
       </svg>
