@@ -22,19 +22,6 @@ export default async function HomePage() {
     <div className="page-shell story-page">
       <section className="story-hero" aria-label="Zipf word-search experiment">
         <SearchPanel />
-        <div className="story-hero-copy">
-          <div className="kicker">public Zipf experiment</div>
-          <dl className="hero-facts" aria-label="Experiment rules">
-            <div>
-              <dt>valid search</dt>
-              <dd>+1 public count</dd>
-            </div>
-            <div>
-              <dt>rediscovery</dt>
-              <dd>moves the rank curve</dd>
-            </div>
-          </dl>
-        </div>
       </section>
 
       <section className="story-section story-copy" aria-labelledby="experiment-heading">
